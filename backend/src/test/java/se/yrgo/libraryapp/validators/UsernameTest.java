@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UsernameTest {
     @ParameterizedTest
-    @ValueSource(strings = {"bosse", "nostrodamus", "bertil", "test", "aaaa"})
+    @ValueSource(strings = {"bosse", "nostrodamus", "bertil", "test", "aaaa", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcd"})
     void testCorrectUsernameLength(String userName) {
         assertThat(Username.validate(userName)).isTrue();
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"aaa", "aa", "a"})
+    @ValueSource(strings = {"aaa", "aa", "a", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"})
     void testIncorrectUsernameLength(String userName) {
         assertThat(Username.validate(userName)).isFalse();
     }
