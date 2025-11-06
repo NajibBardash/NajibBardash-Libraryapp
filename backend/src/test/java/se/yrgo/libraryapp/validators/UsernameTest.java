@@ -47,4 +47,10 @@ public class UsernameTest {
     void testIncorrectCharactersInUsername(String userName) {
         assertThat(Username.validate(userName)).isFalse();
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"berit 56", "eva söderberg89", "lars svensson77"})
+    void testWhitespaceInUsername(String userName) {
+        assertThat(Username.validate(userName)).isFalse();
+    }
 }
