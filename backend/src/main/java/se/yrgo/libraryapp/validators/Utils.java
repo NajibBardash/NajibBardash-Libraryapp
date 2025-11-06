@@ -14,7 +14,7 @@ class Utils {
      * If a string is empty or blank - also after cleanup, return an empty string.
      * If the value is null, return null without throwing an exception.
      * A name is not mandatory to enter, thus null and empty values should be valid
-     * Will return the string as all lowecase.
+     * Will return the string as all lowercase.
      *
      * @param str the string to filter
      * @return a string with all non-letters removed (except whitespace)
@@ -30,7 +30,7 @@ class Utils {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString().toLowerCase();
 
-        return name.isBlank() ? str.trim() : name;
+        return name.isBlank() ? name.trim() : name;
     }
 
     /**
