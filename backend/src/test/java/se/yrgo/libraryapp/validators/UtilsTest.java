@@ -37,4 +37,10 @@ class UtilsTest {
     void testIfResultIsNull(String input) {
         assertThat(Utils.onlyLettersAndWhitespace(input)).isNull();
     }
+
+    @ParameterizedTest
+    @NullSource
+    void testIfCleanAndUnleetRecievesNull(String input) {
+        assertThat(Utils.cleanAndUnLeet(input)).isNull();
+    }
 }
