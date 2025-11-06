@@ -23,12 +23,15 @@ public final class Username {
      * It should not contain any other letters, not even whitespace.
      * It should not only contain sppecial characters.
      * It should not only contain numbers.
+     * Username mustn't be null
      *
      * @param name the name to check
      * @return true if valid, false if not
      *
      */
     public static boolean validate(String name) {
+        if (name == null) { return false; }
+
         return regex.matcher(name).matches()
                 && !onlySpecialCharactersRegex.matcher(name).matches()
                 && !onlyNumbersRegex.matcher(name).matches();
