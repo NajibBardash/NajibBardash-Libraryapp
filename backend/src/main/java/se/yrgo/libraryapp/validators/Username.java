@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
  * or whitespace and at least four and no more than 30 characters long.
  */
 public final class Username {
-    private static final Pattern regex = Pattern.compile("[@._a-zA-Z0-9]{4,30}");
-    private static final Pattern onlySpecialCharactersRegex = Pattern.compile("[@._]{4,30}");
+    private static final Pattern regex = Pattern.compile("[-@._a-zA-Z0-9]{4,30}");
+    private static final Pattern onlySpecialCharactersRegex = Pattern.compile("[-@._]{4,30}");
     private static final Pattern onlyNumbersRegex = Pattern.compile("[0-9]{4,30}");
 
     private Username() {}

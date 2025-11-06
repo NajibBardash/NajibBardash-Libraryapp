@@ -43,7 +43,7 @@ public class UsernameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"å1234", "._@@", "@@@@", "1111", "123456789", "!12Z", "berit-56", "eva_söderberg89"})
+    @ValueSource(strings = {"å1234", "._@@", "@@@@", "1111", "123456789", "!12Z", "berit56", "eva_söderberg89"})
     void testIncorrectCharactersInUsername(String userName) {
         assertThat(Username.validate(userName)).isFalse();
     }
