@@ -24,13 +24,13 @@ class Utils {
             return str;
         }
 
-        if (str.isBlank()) return str.trim();
+        if (str.isBlank()) return "";
 
         String name = str.chars().filter(cp -> Character.isLetter(cp) || Character.isWhitespace(cp))
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString().toLowerCase();
 
-        return name.isBlank() ? name.trim() : name;
+        return name.isBlank() ? "" : name;
     }
 
     /**
