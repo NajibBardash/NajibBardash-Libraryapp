@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 class UtilsTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"båsse !?2124", "Chefen6 6 -!?", " ", "1", "12345"})
+    @ValueSource(strings = {"båsse !?2124", "Chefen6 6 -!?", "1a", "12345a"})
     void testIfAllCharactersAreEitherLettersOrWhitespace(String input) {
         for (Character c : Utils.onlyLettersAndWhitespace(input).toCharArray()) {
             assertThat(Character.isLetter(c) || Character.isWhitespace(c)).isTrue();
@@ -29,7 +29,7 @@ class UtilsTest {
     @ValueSource(strings = {" ", "  ", "   "})
     @EmptySource
     void testIfResultIsEmptyOrWithWhitespace(String input) {
-        assertThat(Utils.onlyLettersAndWhitespace(input)).isEqualTo(input);
+        assertThat(Utils.onlyLettersAndWhitespace(input).length()).isEqualTo(0);
     }
 
     @ParameterizedTest

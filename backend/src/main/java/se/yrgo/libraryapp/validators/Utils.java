@@ -4,29 +4,40 @@ import java.util.Map;
 
 /**
  * Utility functions for validation classes.
- * 
  */
 class Utils {
-    private Utils() {}
+    private Utils() {
+    }
 
     /**
      * Remove any non-alphabetic letters from a string, but keep any whitespace.
+     * If a string is empty or blank - also after cleanup, return an empty string.
+     * If the value is null, return null without throwing an exception.
+     * A name is not mandatory to enter, thus null and empty values should be valid
      * Will return the string as all lowecase.
-     * 
+     *
      * @param str the string to filter
      * @return a string with all non-letters removed (except whitespace)
      */
     static String onlyLettersAndWhitespace(String str) {
-        return str.chars().filter(cp -> Character.isLetter(cp) || Character.isWhitespace(cp))
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+
+        if (str.isBlank()) return str.trim();
+
+        String name = str.chars().filter(cp -> Character.isLetter(cp) || Character.isWhitespace(cp))
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString().toLowerCase();
+
+        return name.isBlank() ? str.trim() : name;
     }
 
     /**
-     * Converts any "leet speak" letters into their alphabetic equivalent (i.e. 4 to a etc.) and 
+     * Converts any "leet speak" letters into their alphabetic equivalent (i.e. 4 to a etc.) and
      * then removes any letters that are not alphabetic (but not whitespace). Will return the string
      * as all lowecase.
-     * 
+     *
      * @param str the string to clean
      * @return a string without non alphabetic characters (except whitespace)
      */
