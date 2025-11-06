@@ -29,7 +29,7 @@ class UtilsTest {
     @ValueSource(strings = {" ", "  ", "   ", "1 2 3 4 5", "!     ?"})
     @EmptySource
     void testIfResultIsEmptyOrWithWhitespace(String input) {
-        assertThat(Utils.onlyLettersAndWhitespace(input).length()).isEqualTo(0);
+        assertThat(Utils.onlyLettersAndWhitespace(input)).isEmpty();
     }
 
     @ParameterizedTest
@@ -42,5 +42,11 @@ class UtilsTest {
     @NullSource
     void testIfCleanAndUnleetRecievesNull(String input) {
         assertThat(Utils.cleanAndUnLeet(input)).isNull();
+    }
+
+    @ParameterizedTest
+    @EmptySource
+    void testIfCleanAndUnleetRecievesEmpty(String input) {
+        assertThat(Utils.cleanAndUnLeet(input)).isEmpty();
     }
 }
