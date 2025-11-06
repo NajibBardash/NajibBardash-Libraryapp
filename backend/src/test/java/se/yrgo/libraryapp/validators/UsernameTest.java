@@ -37,7 +37,7 @@ public class UsernameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"a123", "@12Z", "berit56", "eva_soderberg89", "lars.svensson77"})
+    @ValueSource(strings = {"a123", "@12Z", "berit-56", "eva_soderberg89", "lars.svensson77"})
     void testCorrectCharactersInUsername(String userName) {
         assertThat(Username.validate(userName)).isTrue();
     }
