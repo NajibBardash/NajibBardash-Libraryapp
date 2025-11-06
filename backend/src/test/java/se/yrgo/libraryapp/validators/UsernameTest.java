@@ -43,13 +43,13 @@ public class UsernameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"å1234", "!12Z", "berit-56", "eva_söderberg89"})
+    @ValueSource(strings = {"å1234", "._@@", "@@@@", "!12Z", "berit-56", "eva_söderberg89"})
     void testIncorrectCharactersInUsername(String userName) {
         assertThat(Username.validate(userName)).isFalse();
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"berit 56", "eva söderberg89", "lars svensson77"})
+    @ValueSource(strings = {"berit 56", "eva soderberg89", "lars svensson77"})
     void testWhitespaceInUsername(String userName) {
         assertThat(Username.validate(userName)).isFalse();
     }
