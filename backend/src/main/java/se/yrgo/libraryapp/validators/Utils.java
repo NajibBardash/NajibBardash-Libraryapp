@@ -42,6 +42,10 @@ class Utils {
      * @return a string without non alphabetic characters (except whitespace)
      */
     static String cleanAndUnLeet(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+
         final var leetMap = Map.of('1', 'l', '3', 'e', '4', 'a', '5', 's', '6', 'b', '7', 't', '8', 'b', '0', 'o');
 
         final StringBuilder res = new StringBuilder();
