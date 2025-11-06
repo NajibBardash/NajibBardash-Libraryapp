@@ -1,14 +1,11 @@
 package se.yrgo.libraryapp.validators;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UsernameTest {
     @ParameterizedTest
@@ -18,7 +15,7 @@ public class UsernameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"aaa", "aa", "a", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"})
+    @ValueSource(strings = {"aaa", "aa", "a", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcde"})
     void testIncorrectUsernameLength(String userName) {
         assertThat(Username.validate(userName)).isFalse();
     }
@@ -33,7 +30,7 @@ public class UsernameTest {
     @ParameterizedTest
     @NullSource
     void testNullCharacterLength(String userName) {
-        assertThat(userName).isNull();
+        assertThat(Username.validate(userName)).isFalse();
     }
 
     @ParameterizedTest
@@ -43,7 +40,7 @@ public class UsernameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"å1234", "._@@", "@@@@", "1111", "123456789", "!12Z", "berit56", "eva_söderberg89"})
+    @ValueSource(strings = {"å1234", "._@@", "@@@@", "1111", "123456789", "!12Z", "berit=56", "eva_söderberg89"})
     void testIncorrectCharactersInUsername(String userName) {
         assertThat(Username.validate(userName)).isFalse();
     }
