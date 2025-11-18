@@ -42,6 +42,9 @@ public final class RealName {
      * 
      */
     public static boolean validate(String name) {
+        if (name == null) {
+            return false;
+        }
         String cleanName = Utils.cleanAndUnLeet(name);
         String[] words = cleanName.split("\\W+");
         for (String word : words) {
