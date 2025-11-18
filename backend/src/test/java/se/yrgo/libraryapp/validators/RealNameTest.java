@@ -1,6 +1,7 @@
 package se.yrgo.libraryapp.validators;
 
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,13 +10,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RealNameTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"shit", "McCrack", "bullshit", "dang", "daft", "dong", "smack", "heck"})
-    void testWordsThatShouldNotPass(String badWord) {
+    @NullSource
+    void testShouldReturnFalseGivenNull(String input) {
+        assertThat(RealName.validate(input)).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"No Shit", "Craig McCrack", "More Bullshit", "Mark Dang", "Daft Punk", "Ding Dong", "Smack A lot", "Heck Heiner"})
+    void testWordsThatShouldFail(String badWord) {
         assertThat(RealName.validate(badWord)).isFalse();
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"afaf"})
+    @ValueSource(strings = {"No Shiet", "Craig McCrock", "Angus Young", "Kelly Smeck"})
     void testWordsThatShouldPass(String goodWord) {
         assertThat(RealName.validate(goodWord)).isTrue();
     }
