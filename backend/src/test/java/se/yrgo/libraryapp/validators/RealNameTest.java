@@ -11,8 +11,8 @@ class RealNameTest {
 
     @ParameterizedTest
     @NullSource
-    void testShouldReturnFalseGivenNull(String input) {
-        assertThat(RealName.validate(input)).isFalse();
+    void testShouldReturnTrueGivenNull(String input) {
+        assertThat(RealName.validate(input)).isTrue();
     }
 
     @ParameterizedTest

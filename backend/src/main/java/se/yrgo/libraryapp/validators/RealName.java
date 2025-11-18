@@ -42,14 +42,13 @@ public final class RealName {
      * 
      */
     public static boolean validate(String name) {
-        if (name == null) {
-            return false;
-        }
         String cleanName = Utils.cleanAndUnLeet(name);
-        String[] words = cleanName.split("\\W+");
-        for (String word : words) {
-            if (invalidWords.contains(word)) {
-                return false;
+        if (cleanName != null && !cleanName.isBlank()) {
+            String[] words = cleanName.split("\\W+");
+            for (String word : words) {
+                if (invalidWords.contains(word)) {
+                    return false;
+                }
             }
         }
         return true;
