@@ -23,8 +23,9 @@ public final class RealName {
         try (InputStream is = RealName.class.getClassLoader().getResourceAsStream("bad_words.txt");
                 BufferedReader reader =
                         new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
-            while (reader.readLine() != null) {
-                invalidWords.addAll(reader.lines().collect(Collectors.toSet()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                invalidWords.add(line.toLowerCase());
             }
         } catch (IOException ex) {
             logger.error("Unable to initialize list of bad words", ex);
@@ -35,6 +36,8 @@ public final class RealName {
 
     /**
      * Validates if the given name is a valid and proper name.
+     * If null then the program doesn't crash.
+     * If blank then no need for word-matching.
      * 
      * @param name the name to check
      * @return true if valid, false if not
@@ -42,12 +45,22 @@ public final class RealName {
      */
     public static boolean validate(String name) {
         String cleanName = Utils.cleanAndUnLeet(name);
-        String[] words = cleanName.split("\\W+");
-        for (int i = 1; i < words.length; i++) {
-            if (invalidWords.contains(words[i])) {
-                return false;
+        if (cleanName != null && !cleanName.isBlank()) {
+            String[] words = cleanName.split("\\W+");
+            for (String word : words) {
+                if (invalidWords.contains(word)) {
+                    return false;
+                }
             }
         }
         return true;
+    }
+
+    /**
+     *
+     * @return a set of bad words read from given file
+     */
+    public static Set<String> getBadWords() {
+        return invalidWords;
     }
 }
