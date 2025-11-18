@@ -13,13 +13,16 @@ class RealNameTest {
 
     @Test
     void testIfNumberOfWordsFromFileIsCorrect() {
-        assertThat(RealName.getNumberOfBadWords()).isEqualTo(8);
+        assertThat(RealName.getBadWords()
+                .size()).isEqualTo(8);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"shit", "McCrack", "bullshit", "dang", "daft", "dong", "smack", "heck"})
     void testIfAllWordsAreReadFromFile(String badWord) {
-        assertThat(RealName.getBadWords().contains(badWord)).isTrue();
+        assertThat(RealName.getBadWords()
+                .contains(badWord.toLowerCase()))
+                .isTrue();
     }
 
     @ParameterizedTest
@@ -37,13 +40,13 @@ class RealNameTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"No Shit", "Craig McCrack", "More Bullshit", "Mark Dang", "Daft Punk", "Ding Dong", "Smack A lot", "Heck Heiner"})
-    void testWordsThatShouldFail(String badWord) {
+    void testBadWordsThatShouldFail(String badWord) {
         assertThat(RealName.validate(badWord)).isFalse();
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"No Shiet", "Craig McCrock", "Angus Young", "Kelly Smeck"})
-    void testWordsThatShouldPass(String goodWord) {
+    @ValueSource(strings = {"No Shiet", "Craig McCrook", "Angus Young", "Kelly Smeck"})
+    void testGoodWordsThatShouldPass(String goodWord) {
         assertThat(RealName.validate(goodWord)).isTrue();
     }
 }

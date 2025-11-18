@@ -56,7 +56,11 @@ public final class RealName {
         return true;
     }
 
-    public static int getNumberOfBadWords() {
-        return invalidWords.size();
+    /**
+     *
+     * @return a set of bad words read from given file
+     */
+    public static Set<String> getBadWords() {
+        return invalidWords;
     }
 }
