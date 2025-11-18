@@ -11,6 +11,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class RealNameTest {
 
+    @Test
+    void testIfAllWordsAreReadFromFile() {
+        assertThat(RealName.getNumberOfBadWords()).isEqualTo(8);
+    }
+
     @ParameterizedTest
     @NullSource
     void testShouldReturnTrueGivenNull(String input) {
