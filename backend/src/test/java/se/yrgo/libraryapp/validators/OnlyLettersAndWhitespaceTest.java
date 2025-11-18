@@ -1,15 +1,13 @@
 package se.yrgo.libraryapp.validators;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
-class UtilsTest {
+class OnlyLettersAndWhitespaceTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"båsse !?2124", "Chefen6 6 -!?", "1a", "12345a"})
@@ -26,10 +24,10 @@ class UtilsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {" ", "  ", "   "})
+    @ValueSource(strings = {" ", "  ", "   ", "1 2 3 4 5", "!     ?"})
     @EmptySource
     void testIfResultIsEmptyOrWithWhitespace(String input) {
-        assertThat(Utils.onlyLettersAndWhitespace(input).length()).isEqualTo(0);
+        assertThat(Utils.onlyLettersAndWhitespace(input)).isEmpty();
     }
 
     @ParameterizedTest
