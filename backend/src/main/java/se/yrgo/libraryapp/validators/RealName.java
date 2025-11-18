@@ -55,4 +55,8 @@ public final class RealName {
         }
         return true;
     }
+
+    public static int getNumberOfBadWords() {
+        return invalidWords.size();
+    }
 }
