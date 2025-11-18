@@ -36,6 +36,8 @@ public final class RealName {
 
     /**
      * Validates if the given name is a valid and proper name.
+     * If null then the program doesn't crash.
+     * If blank then no need for word-matching.
      * 
      * @param name the name to check
      * @return true if valid, false if not
