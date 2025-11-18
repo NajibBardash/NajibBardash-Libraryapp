@@ -16,7 +16,7 @@ class RealNameTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"afaf"})
-    void testWordsThatShouldPass(String word) {
-        assertThat(RealName.validate(word)).isTrue();
+    void testWordsThatShouldPass(String goodWord) {
+        assertThat(RealName.validate(goodWord)).isTrue();
     }
 }

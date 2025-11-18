@@ -6,4 +6,3 @@ daft
 dong
 smack
 heck
-shiet
