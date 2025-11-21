@@ -8,9 +8,9 @@ import java.sql.Statement;
 import java.util.Optional;
 import javax.inject.Inject;
 import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
 import se.yrgo.libraryapp.entities.*;
 
@@ -25,9 +25,9 @@ public class UserDao {
 
     public Optional<User> get(String id) {
         try (Connection conn = ds.getConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt
-                        .executeQuery("SELECT user, realname FROM user WHERE id = '" + id + "'")) {
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt
+                     .executeQuery("SELECT user, realname FROM user WHERE id = '" + id + "'")) {
             if (rs.next()) {
                 String name = rs.getString("user");
                 String realname = rs.getString("realname");
@@ -42,9 +42,9 @@ public class UserDao {
 
     public Optional<LoginInfo> getLoginInfo(String user) {
         try (Connection conn = ds.getConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(
-                        "SELECT id, password_hash FROM user WHERE user = '" + user + "'")) {
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(
+                     "SELECT id, password_hash FROM user WHERE user = '" + user + "'")) {
             if (rs.next()) {
                 int id = rs.getInt("id");
                 UserId userId = UserId.of(id);
@@ -58,13 +58,7 @@ public class UserDao {
         return Optional.empty();
     }
 
-    public boolean register(String name, String realname, String password) {
-        Argon2PasswordEncoder encoder = new Argon2PasswordEncoder();
-        String passwordHash = encoder.encode(password);
-
-        // handle names like Ian O'Toole
-        realname = realname.replace("'", "\\'");
-
+    public boolean register(String name, String realname, String passwordHash) {
         try (Connection conn = ds.getConnection()) {
             conn.setAutoCommit(false);
 
@@ -76,13 +70,9 @@ public class UserDao {
     }
 
     public boolean isNameAvailable(String name) {
-        if (name == null || name.trim().length() < 3) {
-            return false;
-        }
-
         String query = "SELECT id FROM user WHERE user = ?";
         try (Connection conn = ds.getConnection();
-                PreparedStatement ps = conn.prepareStatement(query)) {
+             PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, name);
             try (ResultSet rs = ps.executeQuery()) {
                 return !rs.next();
@@ -94,7 +84,7 @@ public class UserDao {
     }
 
     private boolean insertUserAndRole(String name, String realname, String passwordHash,
-            Connection conn) throws SQLException {
+                                      Connection conn) throws SQLException {
         String insertUser = "INSERT INTO user (user, realname, password_hash) VALUES ('" + name
                 + "', '" + realname + "', '" + passwordHash + "')";
 
@@ -105,8 +95,7 @@ public class UserDao {
             if (userId.getId() > 0 && addToUserRole(conn, userId)) {
                 conn.commit();
                 return true;
-            }
-            else {
+            } else {
                 conn.rollback();
                 return false;
             }
