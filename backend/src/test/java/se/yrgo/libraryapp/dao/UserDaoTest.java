@@ -82,6 +82,7 @@ public class UserDaoTest {
         UserDao userDao = new UserDao(ds);
         assertThat(userDao.get(userId)).isEqualTo(Optional.of(expectedUser));
     }
+
     @Test
     void getNonExistingUser() throws SQLException {
         final String username = "testuser";

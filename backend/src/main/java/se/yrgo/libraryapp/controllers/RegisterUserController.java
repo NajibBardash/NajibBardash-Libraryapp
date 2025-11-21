@@ -14,7 +14,6 @@ import se.yrgo.libraryapp.validators.Username;
 
 @Path("/register")
 public class RegisterUserController {
-    private UserDao userDao;
     private UserService service;
 
     @Inject
@@ -30,6 +29,6 @@ public class RegisterUserController {
     @GET
     @Path("/available")
     public boolean isNameAvailable(@QueryParam String name) {
-        return userDao.isNameAvailable(name);
+        return service.isNameAvailable(name);
     }
 }

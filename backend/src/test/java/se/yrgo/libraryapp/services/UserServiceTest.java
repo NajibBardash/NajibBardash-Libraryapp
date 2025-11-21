@@ -70,4 +70,32 @@ public class UserServiceTest {
 
         assertThat(userService.register(username, realname, password)).isFalse();
     }
+
+    @Test
+    @SuppressWarnings("deprecation")
+    void testWhenNameIsAvailable() {
+        final String username = "testuser";
+        final PasswordEncoder encoder = org.springframework.security
+                .crypto.password.NoOpPasswordEncoder.getInstance();
+
+        UserService userService = new UserService(userDao, encoder);
+
+        when(userDao.isNameAvailable(username)).thenReturn(true);
+
+        assertThat(userService.isNameAvailable(username)).isTrue();
+    }
+
+    @Test
+    @SuppressWarnings("deprecation")
+    void testWhenNameIsUnavailable() {
+        final String username = "testuser";
+        final PasswordEncoder encoder = org.springframework.security
+                .crypto.password.NoOpPasswordEncoder.getInstance();
+
+        UserService userService = new UserService(userDao, encoder);
+
+        when(userDao.isNameAvailable(username)).thenReturn(false);
+
+        assertThat(userService.isNameAvailable(username)).isFalse();
+    }
 }
