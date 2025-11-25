@@ -3,14 +3,12 @@ package se.yrgo.libraryapp.services;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
+
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import se.yrgo.libraryapp.dao.UserDao;
 import se.yrgo.libraryapp.entities.*;
-import se.yrgo.libraryapp.validators.Username;
 
 import java.util.Optional;
 
