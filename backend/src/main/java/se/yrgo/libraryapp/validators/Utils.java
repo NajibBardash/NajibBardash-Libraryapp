@@ -1,5 +1,6 @@
 package se.yrgo.libraryapp.validators;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -14,7 +15,7 @@ class Utils {
      * If a string is empty or blank - also after cleanup, return an empty string.
      * If the value is null, return null without throwing an exception.
      * A name is not mandatory to enter, thus null and empty values should be valid
-     * Will return the string as all lowercase.
+     * Will return the string as all lowercase of the user's locale.
      *
      * @param str the string to filter
      * @return a string with all non-letters removed (except whitespace)
@@ -26,9 +27,14 @@ class Utils {
 
         if (str.isBlank()) return "";
 
-        String name = str.chars().filter(cp -> Character.isLetter(cp) || Character.isWhitespace(cp))
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString().toLowerCase();
+        String name = str
+                .toLowerCase(Locale.ROOT)
+                .codePoints()
+                .filter(cp -> Character.isLetter(cp) || Character.isWhitespace(cp))
+                .collect(StringBuilder::new,
+                        StringBuilder::appendCodePoint,
+                        StringBuilder::append)
+                .toString();
 
         return name.isBlank() ? "" : name;
     }
