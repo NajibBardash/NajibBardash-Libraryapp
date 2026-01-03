@@ -23,7 +23,7 @@ public class GeneralStepDefinitions {
     private static SearchPage searchPage;
 
     @Before
-    public void setupWebDriver() {
+    public void setup() {
         try {
             ChromeOptions options = new ChromeOptions();
             driver = new RemoteWebDriver(new URL("http://localhost:4444"),
@@ -35,10 +35,13 @@ public class GeneralStepDefinitions {
     }
 
     @After
-    public void shutdownWebDriver() {
+    public void shutdown() {
         if (driver != null) {
             driver.quit();
         }
+        driver = null;
+        startPage = null;
+        searchPage = null;
     }
 
     public static WebDriver getDriver() {
