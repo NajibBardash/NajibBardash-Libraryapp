@@ -14,3 +14,9 @@ Feature: Searching for books
         Then the following books are shown:
           | Prodigal son            |
           | The eyes of darkness    |
+
+    Scenario: Searching without any parameters shows no results
+        Given the user is on the search page
+        When the user submits the search without any parameters
+        Then no books are shown
+        And an error message is displayed

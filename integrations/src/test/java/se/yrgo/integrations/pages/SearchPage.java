@@ -3,10 +3,8 @@ package se.yrgo.integrations.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import se.yrgo.integrations.utils.CustomConditions;
 import se.yrgo.integrations.utils.Utils;
 import se.yrgo.integrations.viewmodel.BookView;
 
@@ -25,6 +23,8 @@ public class SearchPage {
     private final By submit = By.cssSelector("form input[type='submit']");
 
     private final By authorInput = By.cssSelector("input[placeholder='Author']");
+    private final By bookRows = By.cssSelector("table tbody tr");
+    private final By noBooksFoundMessage = By.cssSelector(".errors div");
 
 
     public SearchPage(WebDriver driver) {
@@ -40,23 +40,47 @@ public class SearchPage {
         return true;
     }
 
-    public void searchByAuthor(String author) {
-        if (isSearchFormVisible()) {
-            WebElement input = wait.until(visibilityOfElementLocated(authorInput));
-            input.clear();
-            input.sendKeys(author);
+    public boolean isErrorMessageVisible() {
+        return !driver.findElements(noBooksFoundMessage).isEmpty()
+                && driver.findElement(noBooksFoundMessage).isDisplayed()
+                && driver.findElement(noBooksFoundMessage).getText().contains("No books found");
+    }
 
-            final WebElement submitButton = Utils.find(driver, submit);
-            wait.until(CustomConditions.elementHasBeenClicked(submitButton));
-        }
+    private void waitForResultsOrError() {
+        wait.until(ExpectedConditions.or(
+                ExpectedConditions.presenceOfAllElementsLocatedBy(bookRows),
+                ExpectedConditions.visibilityOfElementLocated(noBooksFoundMessage)
+        ));
+    }
+
+    public void searchByAuthor(String author) {
+        isSearchFormVisible();
+
+        WebElement input = wait.until(visibilityOfElementLocated(authorInput));
+        input.clear();
+        input.sendKeys(author);
+
+        Utils.find(driver, submit).click();
+        waitForResultsOrError();
+    }
+
+    public void searchWithEmptyParameters() {
+        isSearchFormVisible();
+
+        Utils.find(driver, submit).click();
+        waitForResultsOrError();
     }
 
     public List<BookView> getMatchingBooks() {
         List<BookView> matchingBooks = new ArrayList<>();
 
-        List<WebElement> bookRows = driver.findElements(By.cssSelector("table tbody tr"));
+        if (isErrorMessageVisible()) {
+            return matchingBooks;
+        }
 
-        for (WebElement row : bookRows) {
+        List<WebElement> rows = driver.findElements(bookRows);
+
+        for (WebElement row : rows) {
             List<WebElement> bookData = row.findElements(By.tagName("td"));
 
             String title = bookData.get(0).getText();
