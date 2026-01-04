@@ -19,6 +19,7 @@ public class SearchStepDefinitions {
         }
         return page;
     }
+
     @Then("they can see the search form")
     public void they_can_see_the_search_form() {
         assertThat(searchPage().isSearchFormVisible()).isTrue();

@@ -2,7 +2,6 @@ package se.yrgo.integrations.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,9 +12,11 @@ import java.time.Duration;
 
 public class StartPage {
     private final WebDriver driver;
+    private final WebDriverWait wait;
 
     public StartPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
         if (!driver.getTitle().equals("The Library")) {
             throw new IllegalStateException("Not on the start page");
@@ -26,10 +27,17 @@ public class StartPage {
         return driver.getTitle();
     }
 
-    public SearchPage navigateToSearchPage() {
-        final WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+    public LoginPage navigateToLoginPage() {
+        final var loginLink = Utils.find(driver, By.linkText("LOGIN"));
+        wait.until(CustomConditions.elementHasBeenClicked(loginLink));
 
-        final WebElement searchLink = Utils.find(driver, By.linkText("FIND A BOOK"));
+        wait.until(ExpectedConditions.urlContains("/login"));
+
+        return new LoginPage(driver);
+    }
+
+    public SearchPage navigateToSearchPage() {
+        final var searchLink = Utils.find(driver, By.linkText("FIND A BOOK"));
         wait.until(CustomConditions.elementHasBeenClicked(searchLink));
 
         wait.until(ExpectedConditions.urlContains("/search"));
