@@ -18,7 +18,6 @@ public class SearchPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    private final By form = By.cssSelector("form");
     private final By formInput = By.cssSelector("form input[type='text']");
     private final By submit = By.cssSelector("form input[type='submit']");
 
@@ -31,7 +30,7 @@ public class SearchPage {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
-        wait.until(visibilityOfElementLocated(form));
+        wait.until(visibilityOfElementLocated(By.cssSelector("form")));
     }
 
     public boolean isSearchFormVisible() {
@@ -56,7 +55,7 @@ public class SearchPage {
     public void searchByAuthor(String author) {
         isSearchFormVisible();
 
-        WebElement input = wait.until(visibilityOfElementLocated(authorInput));
+        var input = wait.until(visibilityOfElementLocated(authorInput));
         input.clear();
         input.sendKeys(author);
 
@@ -78,10 +77,10 @@ public class SearchPage {
             return matchingBooks;
         }
 
-        List<WebElement> rows = driver.findElements(bookRows);
+        var rows = driver.findElements(bookRows);
 
         for (WebElement row : rows) {
-            List<WebElement> bookData = row.findElements(By.tagName("td"));
+            var bookData = row.findElements(By.tagName("td"));
 
             String title = bookData.get(0).getText();
             String author = bookData.get(1).getText();
