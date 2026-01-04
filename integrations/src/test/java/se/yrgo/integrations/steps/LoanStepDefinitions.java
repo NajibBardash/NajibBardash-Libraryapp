@@ -57,7 +57,7 @@ public class LoanStepDefinitions {
         loginPage = startPage.navigateToLoginPage();
         loginPage.login("user");    }
 
-    @Given("the user {int} has book {int} on loan")
+    @Given("user {int} has book {int} on loan")
     public void the_user_has_book_on_loan(Integer userId, Integer bookCopyId) {
         // User has the book from the setup in the migrations;
     }
