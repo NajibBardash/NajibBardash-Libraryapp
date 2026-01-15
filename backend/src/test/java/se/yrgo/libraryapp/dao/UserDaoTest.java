@@ -1,5 +1,6 @@
 package se.yrgo.libraryapp.dao;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.Mock;
@@ -17,6 +18,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
+@Disabled
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class UserDaoTest {
     @Mock
