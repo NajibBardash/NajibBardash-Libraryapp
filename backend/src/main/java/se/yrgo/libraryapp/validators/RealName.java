@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +22,8 @@ public final class RealName {
 
     static {
         try (InputStream is = RealName.class.getClassLoader().getResourceAsStream("bad_words.txt");
-                BufferedReader reader =
-                        new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+             BufferedReader reader =
+                     new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 invalidWords.add(line.toLowerCase());
@@ -32,18 +33,27 @@ public final class RealName {
         }
     }
 
-    private RealName() {}
+    private RealName() {
+    }
 
     /**
      * Validates if the given name is a valid and proper name.
      * If null then the program doesn't crash.
      * If blank then no need for word-matching.
-     * 
+     *
      * @param name the name to check
      * @return true if valid, false if not
-     * 
      */
     public static boolean validate(String name) {
+        if (name != null && !name.isBlank()) {
+
+            for (Character c : name.toCharArray()) {
+                if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
+                    return false;
+                }
+            }
+        }
+
         String cleanName = Utils.cleanAndUnLeet(name);
         if (cleanName != null && !cleanName.isBlank()) {
             String[] words = cleanName.split("\\W+");
@@ -57,7 +67,6 @@ public final class RealName {
     }
 
     /**
-     *
      * @return a set of bad words read from given file
      */
     public static Set<String> getBadWords() {
