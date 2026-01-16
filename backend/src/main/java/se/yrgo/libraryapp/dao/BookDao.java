@@ -88,7 +88,7 @@ public class BookDao {
 
         try (Connection conn = ds.getConnection();
                 PreparedStatement ps = conn.prepareStatement(query);
-                ResultSet rs = ps.executeQuery(query)) {
+                ResultSet rs = ps.executeQuery()) {
             return getOverdueFromSet(rs);
         } catch (SQLException ex) {
             logger.error("Uable to get books", ex);
